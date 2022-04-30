@@ -1,13 +1,28 @@
 const router =require('express').Router();
 
-//set up the api get routes
-router.get('/notes',(req,res)=>{
-   res.json(notes);
-});
+const {notes} = require('../../db/db.json');
 
-//set up the api post routes
+const {
+    noteCreateNewNote,
+    noteDeleteNote
+} =require('../../lib/noteFunctions');
+
+//save note history to json db 
+router.get('./notes',(req,res)=>{
+    let saved =notes;
+    res.json(saved);
+})
+
+
 router.post('/notes',(req,res)=>{
+    req.body.id = notes.toString();
+    let notes =noteCreateNewNote(req.body.notes);
     res.json(notes);
 });
 
-//retrieves a note with specific id 
+router.delete("/notes/:id", (req, res) => {
+   noteDeleteNote(notes, req.params.id);
+   res.json(notes);
+});
+
+module.exports =router;
