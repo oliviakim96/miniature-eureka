@@ -15,9 +15,9 @@ router.get('./notes',(req,res)=>{
 
 
 router.post('/notes',(req,res)=>{
-    req.body.id = notes.toString();
-    let notes =noteCreateNewNote(req.body.notes);
-    res.json(notes);
+    req.body.id = notes.length.toString();
+    let note = noteCreateNewNote(req.body, notes);
+    res.json(note);
 });
 
 router.delete("/notes/:id", (req, res) => {
